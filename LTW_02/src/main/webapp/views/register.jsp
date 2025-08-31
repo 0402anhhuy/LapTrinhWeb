@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Tran Anh Huy
-  Date: 11/2/2024
-  Time: 12:45 AM
+  User: ADMIN
+  Date: 8/30/2025
+  Time: 8:08 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -10,7 +10,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Đăng nhập</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký</title>
     <style>
         * {
             margin: 0;
@@ -27,8 +28,8 @@
             background-color: #f0f2f5;
         }
 
-        .login-container {
-            width: 300px;
+        .register-container {
+            width: 350px;
             padding: 2em;
             background: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -43,10 +44,13 @@
 
         .form-group {
             margin-bottom: 1em;
+            text-align: left;
         }
 
         input[type="text"],
-        input[type="password"] {
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"] {
             width: 100%;
             padding: 0.75em;
             border: 1px solid #ddd;
@@ -73,40 +77,62 @@
             background-color: #45a049;
         }
 
-        .register-link {
+        .login-link {
             margin-top: 1em;
             font-size: 0.9em;
             color: #333;
         }
 
-        .register-link a {
+        .login-link a {
             color: #4CAF50;
             text-decoration: none;
             font-weight: bold;
         }
 
-        .register-link a:hover {
+        .login-link a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 <body>
-<div class="login-container">
-    <h2>Login</h2>
-    <form action="login" method="POST">
+<div class="register-container">
+    <h2>Tạo tài khoản mới</h2>
+    <form action="register" method="POST">
         <div class="form-group">
-            <label for="username"></label>
-            <input type="text" id="username" name="username" placeholder="Username" required>
+            <label>
+                <input type="text" name="username" placeholder="Tên đăng nhập" required>
+            </label>
         </div>
         <div class="form-group">
-            <label for="password"></label>
-            <input type="password" id="password" name="password" placeholder="Password" required>
+            <label>
+                <input type="text" name="fullname" placeholder="Họ tên" required>
+            </label>
         </div>
-        <button type="submit">Login</button>
+        <div class="form-group">
+            <label>
+                <input type="email" name="email" placeholder="Nhập Email" required>
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                <input type="tel" name="phone" placeholder="Số điện thoại" required>
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                <input type="password" name="password" placeholder="Mật khẩu" required>
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                <input type="password" name="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+            </label>
+        </div>
+        <button type="submit">Tạo tài khoản</button>
     </form>
 
-    <div class="register-link">
-        Chưa có tài khoản? <a href="register">Đăng ký</a>
+    <div class="login-link">
+        Nếu bạn đã có tài khoản? <a href="login">Đăng nhập</a>
     </div>
 </div>
 </body>
