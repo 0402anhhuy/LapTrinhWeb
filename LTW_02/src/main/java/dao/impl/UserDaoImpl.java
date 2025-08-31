@@ -4,37 +4,79 @@ import config.DBConnection;
 import dao.UserDao;
 import model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class UserDaoImpl implements UserDao {
-    public Connection conn = null;
-    public PreparedStatement ps = null;
-    public ResultSet rs = null;
 
     @Override
     public User get(String username) {
-        String sql = "SELECT * FROM user WHERE username = ? ";
-        try {
-            conn = DBConnection.getConnection();
-            ps = conn.prepareStatement(sql);
+        String sql = "SELECT * FROM user WHERE username = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setEmail(rs.getString("email"));
-                user.setUserName(rs.getString("username"));
-                user.setFullName(rs.getString("fullname"));
-                user.setPassWord(rs.getString("password"));
-                user.setAvatar(rs.getString("avatar"));
-                user.setRoleid(Integer.parseInt(rs.getString("roleid")));
-                user.setPhone(rs.getString("phone"));
-                user.setCreatedDate(rs.getDate("createdDate"));
-                return user; }
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setUsername(rs.getString("username"));
+                    user.setFullname(rs.getString("fullname"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPhone(rs.getString("phone"));
+                    user.setPassword(rs.getString("password"));
+                    user.setRoleid(rs.getInt("roleid"));
+                    user.setCreatedDate(rs.getTimestamp("createddate"));
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        catch (Exception e) {e.printStackTrace(); }
         return null;
+    }
+
+    @Override
+    public void insert(User user) {
+        String sql = "INSERT INTO user (username, fullname, email, phone, password, roleid, createddate) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getFullname());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPhone());
+            ps.setString(5, user.getPassword());
+            ps.setInt(6, user.getRoleid());
+            ps.setTimestamp(7, new Timestamp(user.getCreatedDate().getTime()));
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean checkExistEmail(String email) {
+        return checkExist("SELECT 1 FROM user WHERE email = ?", email);
+    }
+
+    @Override
+    public boolean checkExistUsername(String username) {
+        return checkExist("SELECT 1 FROM user WHERE username = ?", username);
+    }
+
+    @Override
+    public boolean checkExistPhone(String phone) {
+        return checkExist("SELECT 1 FROM user WHERE phone = ?", phone);
+    }
+
+    private boolean checkExist(String sql, String value) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, value);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

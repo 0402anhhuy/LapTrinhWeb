@@ -6,36 +6,24 @@ import java.util.Date;
 @SuppressWarnings("unused")
 public class User implements Serializable {
     private int id;
+    private String username;
+    private String fullname;
     private String email;
-    private String userName;
-    private String fullName;
-    private String passWord;
-    private String avatar;
-    private int roleid;
     private String phone;
+    private String password;
+    private int roleid;
     private Date createdDate;
 
-    public User() {
-    }
+    public User() {}
 
-    public User(int id, String email, String userName, String fullName, String passWord, String avatar, int roleid, String phone, Date createdDate) {
-        this.id = id;
+    public User(String username, String fullname, String email, String phone, String password, int roleid, Date createdDate) {
+        this.username = username;
+        this.fullname = fullname;
         this.email = email;
-        this.userName = userName;
-        this.fullName = fullName;
-        this.passWord = passWord;
-        this.avatar = avatar;
-        this.roleid = roleid;
         this.phone = phone;
+        this.password = password;
+        this.roleid = roleid;
         this.createdDate = createdDate;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public int getId() {
@@ -46,6 +34,22 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -54,28 +58,20 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getRoleid() {
@@ -84,14 +80,6 @@ public class User implements Serializable {
 
     public void setRoleid(int roleid) {
         this.roleid = roleid;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public Date getCreatedDate() {
