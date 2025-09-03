@@ -9,3 +9,4 @@ public interface UserService {
     boolean checkExistUsername(String username);
     boolean checkExistPhone(String phone);
 }
+

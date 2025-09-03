@@ -10,7 +10,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User get(String username) {
-        String sql = "SELECT * FROM user WHERE username = ?";
+        String sql = "SELECT * FROM users WHERE username = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
@@ -36,7 +36,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void insert(User user) {
-        String sql = "INSERT INTO user (username, fullname, email, phone, password, roleid, createddate) " +
+        String sql = "INSERT INTO users (username, fullname, email, phone, password, roleid, createddate) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -55,17 +55,17 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean checkExistEmail(String email) {
-        return checkExist("SELECT 1 FROM user WHERE email = ?", email);
+        return checkExist("SELECT 1 FROM users WHERE email = ?", email);
     }
 
     @Override
     public boolean checkExistUsername(String username) {
-        return checkExist("SELECT 1 FROM user WHERE username = ?", username);
+        return checkExist("SELECT 1 FROM users WHERE username = ?", username);
     }
 
     @Override
     public boolean checkExistPhone(String phone) {
-        return checkExist("SELECT 1 FROM user WHERE phone = ?", phone);
+        return checkExist("SELECT 1 FROM users WHERE phone = ?", phone);
     }
 
     private boolean checkExist(String sql, String value) {
