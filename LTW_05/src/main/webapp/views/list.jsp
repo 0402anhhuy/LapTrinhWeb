@@ -40,7 +40,7 @@
             <button type="submit" class="logout-btn">Đăng xuất</button>
         </form>
         <div>
-            <c:url value="/category/add" var="addUrl"/>
+            <c:url value="/views/add.jsp" var="addUrl"/>
             <a href="${addUrl}" class="btn btn-primary">+ Thêm danh mục</a>
         </div>
     </div>
@@ -71,29 +71,28 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!-- ĐOẠN CODE CỦA BẠN -->
                         <c:forEach items="${categoryList}" var="cate" varStatus="STT">
                             <tr class="odd gradeX">
                                 <td>${STT.index + 1}</td>
 
-                                <c:url value="/image/categories/${cate.cateIcon}" var="imgUrl"/>
                                 <td>
-                                    <img height="150" width="200" src="${imgUrl}" alt="icon ${cate.cateName}"/>
+                                    <img height="150" width="200"
+                                         src="${pageContext.request.contextPath}/image/categories/${cate.cateIcon}"
+                                         alt="icon ${cate.cateName}"/>
                                 </td>
 
                                 <td>${cate.cateName}</td>
                                 <td>${cate.user.username}</td>
                                 <td class="text-center">
-                                    <a href="<c:url value='/category/edit?id=${cate.cateId}'/>"
+                                    <a href="${pageContext.request.contextPath}/views/edit.jsp?id=${cate.cateId}"
                                        class="action-link me-2">Sửa</a>
                                     |
-                                    <a href="<c:url value='/category/delete?id=${cate.cateId}'/>"
+                                    <a href="${pageContext.request.contextPath}/views/delete.jsp?id=${cate.cateId}"
                                        class="action-link ms-2"
                                        onclick="return confirm('Bạn có chắc muốn xóa danh mục này?');">Xóa</a>
                                 </td>
                             </tr>
                         </c:forEach>
-                        <!-- HẾT ĐOẠN CODE CỦA BẠN -->
                         </tbody>
                     </table>
                 </div>

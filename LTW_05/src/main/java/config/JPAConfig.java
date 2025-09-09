@@ -8,7 +8,7 @@ import jakarta.persistence.PersistenceContext;
 @PersistenceContext
 public class JPAConfig {
     public static EntityManager getEntityManager() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("dataSource");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("test");
         return factory.createEntityManager();
     }
 }
