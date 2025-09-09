@@ -6,7 +6,7 @@
         <class>entity.Category</class>
         <class>entity.User</class>
         <properties>
-            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url"
                       value="jdbc:mysql://localhost:3306/test" />
             <property name="jakarta.persistence.jdbc.user" value="root" />
