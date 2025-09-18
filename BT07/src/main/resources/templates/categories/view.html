@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Xem danh mục</title>
+    <style>
+        body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; }
+        .container { max-width:600px; margin:40px auto; background:white;
+            padding:20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+        h2 { color:#2196f3; }
+        .info { margin-bottom:16px; }
+        .info label { font-weight: bold; display:block; }
+        img { width:200px; height:150px; object-fit:cover; border-radius:8px; margin-top:8px; }
+        a { text-decoration:none; color:#1976d2; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Chi tiết danh mục</h2>
+    <div class="info">
+        <label>ID:</label>
+        <span th:text="${category.id}">1</span>
+    </div>
+    <div class="info">
+        <label>Tên danh mục:</label>
+        <span th:text="${category.name}">Đồng hồ</span>
+    </div>
+    <div class="info">
+        <label>Ảnh:</label>
+        <img th:src="@{/images/{img}(img=${category.image})}" alt="Ảnh danh mục"/>
+    </div>
+    <a th:href="@{/}">← Quay lại danh sách</a>
+</div>
+</body>
+</html>
