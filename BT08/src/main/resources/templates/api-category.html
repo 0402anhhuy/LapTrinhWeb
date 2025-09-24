@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <title>API Categories</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 24px;
+            background-color: #f8f9fa;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        input, textarea {
+            margin: 4px 0;
+            padding: 8px;
+            width: 100%;
+            max-width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .row {
+            margin-bottom: 16px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        /* Màu sắc cho các button theo phương thức HTTP */
+        .method-btn {
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .get-btn { background-color: #61affe; }
+        .post-btn { background-color: #49cc90; }
+        .put-btn { background-color: #fca130; }
+        .delete-btn { background-color: #f93e3e; }
+
+        .get-btn:hover {
+            background-color: #4fa3e3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .post-btn:hover {
+            background-color: #3cb179;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .put-btn:hover {
+            background-color: #e68a2e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .delete-btn:hover {
+            background-color: #e03535;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 8px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .input-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 120px;
+        }
+
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+
+        .success {
+            color: #2e7d32;
+        }
+
+        .error {
+            color: #c62828;
+        }
+
+        textarea {
+            max-width: 400px;
+            min-height: 120px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>API Categories</h1>
+
+<section>
+    <button class="method-btn get-btn" id="btnCatGetAll">GET /api/categories?page=0&size=5</button>
+    <div class="row">
+        <div class="input-group">
+            <div class="input-item">
+                <label>Page:</label>
+                <input id="catPage" type="number" value="0" />
+            </div>
+            <div class="input-item">
+                <label>Size:</label>
+                <input id="catSize" type="number" value="5" />
+            </div>
+        </div>
+    </div>
+    <pre id="outCatGetAll"></pre>
+</section>
+
+<section>
+    <button class="method-btn get-btn" id="btnCatGetById">GET /api/categories/{id}</button>
+    <div class="row">
+        <div class="input-group">
+            <div class="input-item">
+                <label>Id:</label>
+                <input id="getCatId" type="number" value="1" />
+            </div>
+        </div>
+    </div>
+    <pre id="outCatGetById"></pre>
+</section>
+
+<section>
+    <button class="method-btn post-btn" id="btnCatPost">POST /api/categories</button>
+    <div class="row">
+        <label>JSON body:</label>
+        <textarea id="postCatBody">
+{
+  "name": "New Category",
+  "image": "https://example.com/image.png"
+}
+        </textarea>
+    </div>
+    <pre id="outCatPost"></pre>
+</section>
+
+<section>
+    <button class="method-btn put-btn" id="btnCatPut">PUT /api/categories/{id}</button>
+    <div class="row">
+        <div class="input-group">
+            <div class="input-item">
+                <label>Id:</label>
+                <input id="putCatId" type="number" value="1" />
+            </div>
+        </div>
+        <label>JSON body:</label>
+        <textarea id="putCatBody">
+{
+  "name": "Updated Category",
+  "image": "https://example.com/new-image.png"
+}
+        </textarea>
+    </div>
+    <pre id="outCatPut"></pre>
+</section>
+
+<section>
+    <button class="method-btn delete-btn" id="btnCatDelete">DELETE /api/categories/{id}</button>
+    <div class="row">
+        <div class="input-group">
+            <div class="input-item">
+                <label>Id:</label>
+                <input id="deleteCatId" type="number" value="1" />
+            </div>
+        </div>
+    </div>
+    <pre id="outCatDelete"></pre>
+</section>
+
+<script>
+    const pretty = (data) => JSON.stringify(data, null, 2);
+
+    const handle = async (outEl, fn) => {
+        outEl.textContent = "Loading...";
+        outEl.className = 'loading';
+        try {
+            const res = await fn();
+            const text = await res.text();
+            let body;
+            try {
+                body = JSON.parse(text);
+            } catch {
+                body = text;
+            }
+
+            outEl.textContent = `${res.status} ${res.statusText}\n\n` + (typeof body === 'string' ? body : pretty(body));
+
+            if (res.status >= 200 && res.status < 300) {
+                outEl.className = 'success';
+            } else {
+                outEl.className = 'error';
+            }
+        } catch (e) {
+            outEl.textContent = 'Error: ' + e.message;
+            outEl.className = 'error';
+        }
+    };
+
+    document.getElementById('btnCatGetAll').onclick = () => {
+        const page = document.getElementById('catPage').value || 0;
+        const size = document.getElementById('catSize').value || 5;
+        handle(document.getElementById('outCatGetAll'), () =>
+            fetch(`/api/categories?page=${page}&size=${size}`)
+        );
+    };
+
+    document.getElementById('btnCatGetById').onclick = () => {
+        const id = document.getElementById('getCatId').value;
+        handle(document.getElementById('outCatGetById'), () =>
+            fetch(`/api/categories/${id}`)
+        );
+    };
+
+    document.getElementById('btnCatPost').onclick = () => {
+        const body = document.getElementById('postCatBody').value;
+        handle(document.getElementById('outCatPost'), () =>
+            fetch('/api/categories', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body
+            })
+        );
+    };
+
+    document.getElementById('btnCatPut').onclick = () => {
+        const id = document.getElementById('putCatId').value;
+        const body = document.getElementById('putCatBody').value;
+        handle(document.getElementById('outCatPut'), () =>
+            fetch(`/api/categories/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body
+            })
+        );
+    };
+
+    document.getElementById('btnCatDelete').onclick = () => {
+        const id = document.getElementById('deleteCatId').value;
+        handle(document.getElementById('outCatDelete'), () =>
+            fetch(`/api/categories/${id}`, { method: 'DELETE' })
+        );
+    };
+</script>
+</body>
+</html>
