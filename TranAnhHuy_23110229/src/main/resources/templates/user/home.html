@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title layout:fragment="title">Trang chủ - Web App</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Danh mục</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a th:href="@{/categories}" class="list-group-item list-group-item-action">
+                            Tất cả danh mục
+                        </a>
+                        <a th:each="category : ${categories_23110229}"
+                           th:href="@{'/categories/' + ${category.categoryId_23110229}}"
+                           class="list-group-item list-group-item-action"
+                           th:text="${category.categoryname_23110229}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <h3>Video mới nhất</h3>
+            <div class="row">
+                <div th:each="video : ${videosPage_23110229.content}" class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img th:src="${video.poster_23110229}"
+                             alt="Poster"
+                             style="width:100%; height:200px; object-fit:cover;">
+                        <div class="card-body">
+                            <h5 th:text="${video.title_23110229}"></h5>
+                            <p class="text-muted" th:text="${video.category_23110229.categoryname_23110229}"></p>
+                            <p class="text-muted">
+                                Lượt xem: <span th:text="${video.views_23110229}"></span>
+                            </p>
+                            <a th:href="@{'/video/' + ${video.videoId_23110229}}" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination mt-4" th:if="${totalPages_23110229 > 1}">
+                <a class="page-link"
+                   th:classappend="${currentPage_23110229 == 0} ? ' disabled'"
+                   th:href="@{/(page_23110229=${currentPage_23110229 - 1})}">« Trước</a>
+
+                <span th:each="i : ${#numbers.sequence(0, totalPages_23110229 - 1)}">
+                    <a class="page-link"
+                       th:classappend="${i == currentPage_23110229} ? ' active'"
+                       th:text="${i + 1}"
+                       th:href="@{/(page_23110229=${i})}"></a>
+                </span>
+
+                <a class="page-link"
+                   th:classappend="${currentPage_23110229 + 1 >= totalPages_23110229} ? ' disabled'"
+                   th:href="@{/(page_23110229=${currentPage_23110229 + 1})}">Sau »</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+package com.ltw.trananhhuy_23110229.service;
+
+import com.ltw.trananhhuy_23110229.entity.Share_23110229;
+import com.ltw.trananhhuy_23110229.entity.Video_23110229;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface ShareService_23110229 {
+    List<Share_23110229> findAll_23110229();
+
+    Optional<Share_23110229> findById_23110229(Integer shareId_23110229);
+
+    Share_23110229 save_23110229(Share_23110229 share_23110229);
+
+    void deleteById_23110229(Integer shareId_23110229);
+
+    List<Share_23110229> findByVideo_23110229(Video_23110229 video_23110229);
+
+    Long countByVideoId_23110229(String videoId_23110229);
+}

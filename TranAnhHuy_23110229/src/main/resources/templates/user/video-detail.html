@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Chi tiết Video</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img th:src="${video_23110229.poster_23110229}"
+                                 class="img-fluid"
+                                 alt="Poster">
+                        </div>
+                        <div class="col-md-8">
+                            <h3 th:text="${video_23110229.title_23110229}"></h3>
+                            <p><strong>Mã video:</strong>
+                                <span th:text="${video_23110229.videoId_23110229}"></span></p>
+                            <p><strong>Category name:</strong>
+                                <span th:text="${video_23110229.category_23110229.categoryname_23110229}"></span>
+                            </p>
+                            <p><strong>View:</strong>
+                                <span th:text="${video_23110229.views_23110229}"></span></p>
+                            <p>
+                                <strong>Share(<span th:text="${shareCount_23110229}"></span>)</strong>
+                                <strong>Like(<span th:text="${likeCount_23110229}"></span>)</strong>
+                            </p>
+
+                            <div class="mt-3">
+                                <!-- Like -->
+                                <form th:action="@{'/video/' + ${video_23110229.videoId_23110229} + '/like'}"
+                                      method="post"
+                                      class="d-inline">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">
+                                        👍 Like
+                                    </button>
+                                </form>
+
+                                <!-- Share -->
+                                <button type="button"
+                                        class="btn btn-outline-info btn-sm ms-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#shareModal">
+                                    📤 Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h5>Mô tả</h5>
+                        <p th:text="${video_23110229.description_23110229}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="modal fade" id="shareModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chia sẻ video</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form th:action="@{'/video/' + ${video_23110229.videoId_23110229} + '/share'}" method="post">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Email người nhận:</label>
+                            <label>
+                                <input type="email" name="emails_23110229" class="form-control" required>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Gửi chia sẻ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

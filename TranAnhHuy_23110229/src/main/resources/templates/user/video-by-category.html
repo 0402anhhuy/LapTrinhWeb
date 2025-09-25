@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Video theo danh mục</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/categories}">Danh mục</a></li>
+            <li class="breadcrumb-item active" th:text="${category_23110229.categoryname_23110229}"></li>
+        </ol>
+    </nav>
+
+    <h3 th:text="'Video - ' + ${category_23110229.categoryname_23110229}"></h3>
+
+    <div th:if="${#lists.isEmpty(videos_23110229)}" class="alert alert-info">
+        Không có video nào trong danh mục này.
+    </div>
+
+    <div class="row">
+        <div th:each="video : ${videos_23110229}" class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img th:src="${video.poster_23110229}"
+                     class="card-img-top"
+                     alt="Poster"
+                     style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${video.title_23110229}"></h5>
+                    <p class="card-text">
+                        <small class="text-muted">Mã video: <span th:text="${video.videoId_23110229}"></span></small>
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">Category name: <span th:text="${video.category_23110229.categoryname_23110229}"></span></small>
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">View: <span th:text="${video.views_23110229}"></span></small>
+                    </p>
+                    <a th:href="@{'/video/' + ${video.videoId_23110229}}" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

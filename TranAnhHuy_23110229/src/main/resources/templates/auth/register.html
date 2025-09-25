@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title layout:fragment="title">Đăng ký - Web App</title>
+</head>
+
+<div layout:fragment="content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Đăng ký tài khoản</h3>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/auth/register}" method="post">
+                        <div th:if="${error_23110229}" class="alert alert-danger" th:text="${error_23110229}"></div>
+                        <div th:if="${success_23110229}" class="alert alert-success" th:text="${success_23110229}"></div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="username_23110229">Username:</label>
+                            <input id="username_23110229" type="text" name="username_23110229" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="password_23110229">Password:</label>
+                            <input id="password_23110229" type="password" name="password_23110229" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="fullname_23110229">Fullname:</label>
+                            <input id="fullname_23110229" type="text" name="fullname_23110229" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="email_23110229">Email:</label>
+                            <input id="email_23110229" type="email" name="email_23110229" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a th:href="@{/auth/login}">Đã có tài khoản? Đăng nhập ngay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

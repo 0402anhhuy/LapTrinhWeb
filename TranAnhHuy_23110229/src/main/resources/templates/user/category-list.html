@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Danh mục Video</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h3 class="mb-4">Danh mục Video</h3>
+
+    <div class="row">
+        <div th:each="category : ${categories_23110229}" class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 th:text="${category.categoryname_23110229} + ' (' +
+                            ${#lists.size(videoCounts_23110229.![0]) > #lists.indexOf(categories_23110229, category) ?
+                            videoCounts_23110229[#lists.indexOf(categories_23110229, category)][1] : 0} + ')'">
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p th:text="'Mã: ' + ${category.categorycode_23110229}"></p>
+                    <a th:href="@{'/categories/' + ${category.categoryId_23110229}}"
+                       class="btn btn-primary btn-sm">
+                        Xem video
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video count by category -->
+    <div class="mt-5">
+        <h4>Thống kê số lượng video theo danh mục</h4>
+        <table class="table table-bordered">
+            <thead class="table-dark">
+            <tr>
+                <th>Danh mục</th>
+                <th>Số lượng video</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="count : ${videoCounts_23110229}">
+                <td th:text="${count[0].categoryname_23110229}"></td>
+                <td th:text="${count[1]}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

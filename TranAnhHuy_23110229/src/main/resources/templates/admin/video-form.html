@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/base}">
+<head>
+    <title th:text="${video_23110229.videoId_23110229 != null} ? 'Sửa video' : 'Thêm video mới'"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 th:text="${video_23110229.videoId_23110229 != null} ? 'Sửa video' : 'Thêm video mới'"></h4>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/admin/videos/save}" method="post" th:object="${video_23110229}">
+                        <div class="mb-3">
+                            <label class="form-label">Mã video:</label>
+                            <input type="text" th:field="*{videoId_23110229}" class="form-control" required
+                                   th:readonly="${video_23110229.videoId_23110229 != null}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tiêu đề:</label>
+                            <input type="text" th:field="*{title_23110229}" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Poster URL:</label>
+                            <input type="text" th:field="*{poster_23110229}" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mô tả:</label>
+                            <textarea th:field="*{description_23110229}" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Danh mục:</label>
+                            <select th:field="*{category_23110229.categoryId_23110229}" class="form-select" required>
+                                <option value="">Chọn danh mục</option>
+                                <option th:each="category : ${categories_23110229}"
+                                        th:value="${category.categoryId_23110229}"
+                                        th:text="${category.categoryname_23110229}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" th:field="*{active_23110229}" class="form-check-input">
+                            <label class="form-check-label">Active</label>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a th:href="@{/admin/videos}" class="btn btn-secondary me-md-2">Hủy</a>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

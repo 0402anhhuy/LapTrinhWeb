@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Quản lý Video</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Quản lý Video</h3>
+        <a th:href="@{/admin/videos/create}" class="btn btn-success">Thêm video mới</a>
+    </div>
+
+    <div th:if="${#lists.isEmpty(videoPage_23110229.content)}" class="alert alert-info">
+        Chưa có video nào. <a th:href="@{/admin/videos/create}">Thêm video đầu tiên</a>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(videoPage_23110229.content)}">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th>Mã video</th>
+                    <th>Tiêu đề</th>
+                    <th>Danh mục</th>
+                    <th>Lượt xem</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="video : ${videoPage_23110229.content}">
+                    <td th:text="${video.videoId_23110229}"></td>
+                    <td th:text="${video.title_23110229}"></td>
+                    <td th:text="${video.category_23110229.categoryname_23110229}"></td>
+                    <td th:text="${video.views_23110229}"></td>
+                    <td>
+                        <span th:if="${video.active_23110229}" class="badge bg-success">Active</span>
+                        <span th:unless="${video.active_23110229}" class="badge bg-danger">Inactive</span>
+                    </td>
+                    <td>
+                        <a th:href="@{'/admin/videos/edit/' + ${video.videoId_23110229}}"
+                           class="btn btn-warning btn-sm">Sửa</a>
+                        <a th:href="@{'/admin/videos/delete/' + ${video.videoId_23110229}}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Bạn có chắc muốn xóa video này?')">Xóa</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <nav th:if="${videoPage_23110229.totalPages > 1}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${currentPage_23110229 == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{'/admin/videos?page=' + ${currentPage_23110229 - 1}}">Previous</a>
+                </li>
+
+                <li th:each="i : ${#numbers.sequence(0, videoPage_23110229.totalPages - 1)}"
+                    class="page-item"
+                    th:classappend="${i == currentPage_23110229} ? 'active'">
+                    <a class="page-link" th:href="@{'/admin/videos?page=' + ${i}}" th:text="${i + 1}"></a>
+                </li>
+
+                <li class="page-item" th:classappend="${currentPage_23110229 == videoPage_23110229.totalPages - 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{'/admin/videos?page=' + ${currentPage_23110229 + 1}}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

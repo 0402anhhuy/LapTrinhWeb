@@ -1,0 +1,28 @@
+<header th:fragment="header">
+    <nav class="app-navbar">
+        <div class="container app-navbar__inner">
+            <a class="brand" th:href="@{/}">Web App 23110229</a>
+
+            <div class="nav-left">
+                <a class="nav-link" th:href="@{/}">Trang Chủ</a>
+                <a class="nav-link" th:href="@{/categories}">Sản phẩm</a>
+            </div>
+
+            <div class="nav-right">
+                <th:block th:if="${session.user_23110229 == null}">
+                    <a class="nav-link" th:href="@{/auth/login}">Đăng nhập</a>
+                </th:block>
+
+                <th:block th:if="${session.user_23110229 != null}">
+                    <span class="nav-text">Xin chào, <span th:text="${session.user_23110229.fullname_23110229}"></span></span>
+
+                    <th:block th:if="${session.user_23110229.admin_23110229}">
+                        <a class="nav-link" th:href="@{/admin/videos}">Trang quản trị</a>
+                    </th:block>
+
+                    <a class="nav-link" th:href="@{/auth/logout}">Đăng xuất</a>
+                </th:block>
+            </div>
+        </div>
+    </nav>
+</header>
