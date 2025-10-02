@@ -40,7 +40,9 @@
                 <div class="text-center text-white mb-4">
                     <i class="fas fa-cogs fa-2x mb-2"></i>
                     <h4>Admin Panel</h4>
-                    <p class="text-light">Welcome, <span th:text="${user.username}">Admin</span></p>
+                    <p class="text-light">
+                        Welcome, <span th:text="${session.loggedInUser != null ? session.loggedInUser.username : 'Guest'}">Guest</span>
+                    </p>
                 </div>
 
                 <ul class="nav flex-column">
@@ -90,12 +92,7 @@
                         </h5>
                     </div>
                     <div class="card-body">
-                        <form th:action="${categoryDTO.id != null} ?
-                                            @{/admin/categories/{id}(id=${categoryDTO.id})} :
-                                            @{/admin/categories}"
-                              method="post"
-                              th:object="${categoryDTO}">
-
+                        <form th:if="${categoryDTO.id == null}" th:action="@{/admin/categories}" method="post" th:object="${categoryDTO}">
                             <div th:if="${categoryDTO.id != null}">
                                 <input type="hidden" name="_method" value="put">
                             </div>
