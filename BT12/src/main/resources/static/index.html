@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Support Chat</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #chat-window { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 10px; }
+        #chat-messages { list-style-type: none; padding: 0; margin: 0; }
+        #chat-messages li { margin-bottom: 5px; }
+        .message { background-color: #f1f1f1; padding: 8px; border-radius: 5px; }
+        .sender { font-weight: bold; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<h2>Customer Support Chat</h2>
+<div id="username-page">
+    <input type="text" id="name" placeholder="Enter your name" />
+    <button onclick="connect()">Connect</button>
+</div>
+
+<div id="chat-page" style="display: none;">
+    <div id="chat-window">
+        <ul id="chat-messages"></ul>
+    </div>
+    <input type="text" id="message" placeholder="Type a message..." />
+    <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+    var stompClient = null;
+    var username = null;
+
+    function connect() {
+        username = document.getElementById('name').value.trim();
+        if (username) {
+            document.getElementById('username-page').style.display = 'none';
+            document.getElementById('chat-page').style.display = 'block';
+
+            // Tạo một kết nối SockJS đến endpoint '/ws' mà chúng ta đã cấu hình ở backend
+            var socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+
+            // Kết nối tới STOMP server
+            stompClient.connect({}, onConnected, onError);
+        }
+    }
+
+    function onConnected() {
+        // Sau khi kết nối thành công, đăng ký (subscribe) vào topic '/topic/public'
+        // để nhận tin nhắn từ server
+        stompClient.subscribe('/topic/public', onMessageReceived);
+
+        // Gửi một tin nhắn thông báo rằng người dùng đã tham gia
+        stompClient.send("/app/chat.sendMessage",
+            {},
+            JSON.stringify({ sender: username, content: username + ' has joined!' })
+        );
+    }
+
+    function onError(error) {
+        console.log('Could not connect to WebSocket server. Please refresh this page to try again!');
+    }
+
+    function sendMessage() {
+        var messageContent = document.getElementById('message').value.trim();
+        if (messageContent && stompClient) {
+            var chatMessage = {
+                sender: username,
+                content: messageContent
+            };
+            // Gửi tin nhắn đến đích '/app/chat.sendMessage' trên server
+            stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+            document.getElementById('message').value = '';
+        }
+    }
+
+    function onMessageReceived(payload) {
+        var message = JSON.parse(payload.body);
+
+        var messageElement = document.createElement('li');
+        messageElement.classList.add('message');
+
+        var senderElement = document.createElement('span');
+        senderElement.classList.add('sender');
+        senderElement.appendChild(document.createTextNode(message.sender + ": "));
+        messageElement.appendChild(senderElement);
+
+        var contentElement = document.createElement('span');
+        contentElement.appendChild(document.createTextNode(message.content));
+        messageElement.appendChild(contentElement);
+
+        document.getElementById('chat-messages').appendChild(messageElement);
+        // Tự động cuộn xuống tin nhắn mới nhất
+        document.getElementById('chat-window').scrollTop = document.getElementById('chat-window').scrollHeight;
+    }
+</script>
+</body>
+</html>
